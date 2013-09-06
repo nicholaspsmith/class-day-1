@@ -53,9 +53,10 @@ class Racetrack
 		end
 
 		begin
-			##place bet
+			puts "---------------\nLap #{@time+1}\n---------------"
 			forward
-		end while (time < 6)
+			place_bets
+		end while (@time < 6)
 
 		@cars.each do |x|
 			x.speed = 0
@@ -64,7 +65,7 @@ class Racetrack
 		print_winner
 	end
 
-	def forward# time by one hour
+	def forward# @time by one hour
 		@cars.each do |car|
 			car.increase_speed rand(21)# number between 0..20
 		end
@@ -84,5 +85,13 @@ class Racetrack
 			end
 		end
 	puts "The winner is #{winner.name}"
+	end
+
+	def place_bets
+		puts "Enter bet amount and press enter"
+		amt = gets.chomp
+		puts "Your bet is #{amt} Correct? (y/n)"
+		ans = gets.chomp.downcase
+		puts "You said: #{ans}"
 	end
 end
