@@ -7,8 +7,13 @@
 class Racecar
 	attr_accessor :speed, :name
 
-	def increase_speed by_this_many# mph
-		##
+	def initialize name
+		@name = name
+		@speed = rand(0..60)
+	end
+
+	def increase_speed amt# mph
+		@speed += amt
 	end
 
 end
@@ -18,6 +23,7 @@ class Racetrack
 	attr_reader :time
 
 	def initialize
+		@time = 0
 		@cars = Array.new
 		@race_start = false
 		prompt_user
@@ -43,14 +49,12 @@ class Racetrack
 		@race_start = true
 		@cars.each do |x|
 			##give each car a random speed between (60..80)
-			x.speed = rand(60..80)
-			puts x.speed
+			x.speed= rand(60..80)
 		end
 
 		begin
 			##place bet
 			forward
-			@time += 1
 		end while (time < 6)
 
 		@cars.each do |x|
@@ -61,13 +65,10 @@ class Racetrack
 	end
 
 	def forward# time by one hour
-		@time += 1
-
-		if @time < 6
-			@cars.each do car
-				car.increase_speed rand(21)# number between 0..20
-			end
+		@cars.each do |car|
+			car.increase_speed rand(21)# number between 0..20
 		end
+		@time += 1
 	end
 
 	def check car# for speed
@@ -75,6 +76,13 @@ class Racetrack
 	end
 
 	def print_winner
+		winner = @cars[0]
 		##print winner of the race
+		@cars.each do |car|
+			if car.speed > winner.speed
+				winner = car
+			end
+		end
+	puts "The winner is #{winner.name}"
 	end
 end
