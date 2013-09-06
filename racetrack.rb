@@ -40,7 +40,7 @@ class Racetrack
 	end
 
 	def addCar(name)
-		if (!@race_start)
+		if (!@race_start and name != "start")
 			@cars.push(Racecar.new(name))
 		end
 	end
@@ -56,13 +56,14 @@ class Racetrack
 			puts "---------------\nLap #{@time+1}\n---------------"
 			forward
 			place_bets
-		end while (@time < 6)
+		end while (@time < 5)
 
 		@cars.each do |x|
 			x.speed = 0
 		end
 
 		print_winner
+		print_payout
 	end
 
 	def forward# @time by one hour
@@ -90,8 +91,20 @@ class Racetrack
 	def place_bets
 		puts "Enter bet amount and press enter"
 		amt = gets.chomp
-		puts "Your bet is #{amt} Correct? (y/n)"
-		ans = gets.chomp.downcase
-		puts "You said: #{ans}"
+		puts "Place bet of $#{amt} on which car?"
+		@cars.each do |car|
+			puts car.name
+		end
+		ans = gets.chomp
+		@cars.each do |car|
+			if car.name == ans
+				puts "Bet #{amt} on #{car.name}"
+			end
+		end
+		
+	end
+
+	def print_payout
+		puts "print_payout to be implemented..."
 	end
 end
